@@ -1,7 +1,7 @@
 // @mui
-import PropTypes from 'prop-types';
-import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 // components
@@ -53,7 +53,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
             )} 100%)`,
         }}
       >
-        <Iconify icon={icon} width={24} height={24} />
+        <Iconify icon={icon} width={30} height={30} />
       </IconWrapperStyle>
 
       <Typography variant="h3">{fShortenNumber(total)}</Typography>
