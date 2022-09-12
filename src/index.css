@@ -1,0 +1,25 @@
+.page-dashboard .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+    width: calc(100% - 32px) !important;
+    margin: 16px;
+    margin-bottom: 0;
+}
+
+.page-dashboard .css-m6djc-MuiPaper-root-MuiCard-root{
+    overflow: inherit !important;
+}
+
+.page-dashboard .css-j5h6pi-MuiPopper-root{
+    z-index: 400000 !important;
+}
+
+.page-dashboard .css-3dah0e-MuiModal-root-MuiDialog-root{
+    z-index: 1000000;
+}
+
+.page-dashboard .css-1e7hmih-MuiGrid-root{
+    z-index: 1 !important;
+}
+
+.page-dashboard .css-dxfs78 , .css-43vjul-MuiPaper-root-MuiDrawer-paper{
+    z-index: 40000000 !important;
+}

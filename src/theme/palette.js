@@ -98,6 +98,7 @@ const CHART_COLORS = {
   red: ['#FF6C40', '#FF8F6D', '#FFBD98', '#FFF2D4'],
 };
 
+
 const palette = {
   common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY },
@@ -107,6 +108,7 @@ const palette = {
   warning: { ...WARNING },
   error: { ...ERROR },
   grey: GREY,
+  gradient: {...GRADIENTS},
   gradients: GRADIENTS,
   chart: CHART_COLORS,
   divider: GREY[500_24],

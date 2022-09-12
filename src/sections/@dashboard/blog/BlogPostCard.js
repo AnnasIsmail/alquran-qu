@@ -1,21 +1,19 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Avatar, Box, Card, CardContent, Grid, Link, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../../components/SvgIconStyle';
-import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-const CardMediaStyle = styled('div')({
+const CardMediaStyle = styled('div')(({ theme }) => ({
   position: 'relative',
-  paddingTop: 'calc(100% * 3 / 4)',
-});
+  paddingTop: 'calc(100% * 1 / 20)',
+  paddingBottom: 'calc(100% * 1 / 25)',
+}));
 
 const TitleStyle = styled(Link)({
   height: 44,
@@ -48,6 +46,7 @@ const CoverImgStyle = styled('img')({
   height: '100%',
   objectFit: 'cover',
   position: 'absolute',
+  zIndex: 1,
 });
 
 // ----------------------------------------------------------------------
@@ -58,21 +57,16 @@ BlogPostCard.propTypes = {
 };
 
 export default function BlogPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
-
-  const POST_INFO = [
-    { number: comment, icon: 'eva:message-circle-fill' },
-    { number: view, icon: 'eva:eye-fill' },
-    { number: share, icon: 'eva:share-fill' },
-  ];
+  const { number , ayahCount , asma , type } = post;
+  const latestPostLarge = index === -1;
+  const latestPost = index === -2;
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
       <Card sx={{ position: 'relative' }}>
         <CardMediaStyle
           sx={{
+            bgcolor: 'primary.main',
             ...((latestPostLarge || latestPost) && {
               pt: 'calc(100% * 4 / 3)',
               '&:after': {
@@ -81,7 +75,7 @@ export default function BlogPostCard({ post, index }) {
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+                bgcolor: 'primary.lighter',
               },
             }),
             ...(latestPostLarge && {
@@ -106,8 +100,10 @@ export default function BlogPostCard({ post, index }) {
             }}
           />
           <AvatarStyle
-            alt={author.name}
-            src={author.avatarUrl}
+            alt={asma.id.long}
+
+            src={(type.id === "Makkiyyah")?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ3wWK8pbaqHo141c0nXzJpNVwY-T9-Tvalkha4My6bQ&s":"https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/01/01/42811862.jpg"}
+
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
@@ -119,7 +115,12 @@ export default function BlogPostCard({ post, index }) {
             }}
           />
 
-          <CoverImgStyle alt={title} src={cover} />
+          <Typography gutterBottom variant="h5" sx={{ p: 2, zIndex: 9, color: 'background.paper', textAlign: 'right' }} >
+            {asma.ar.short}
+          </Typography>
+          
+          {/* <CoverImgStyle  alt={title} src={cover} /> */}
+
         </CardMediaStyle>
 
         <CardContent
@@ -133,11 +134,11 @@ export default function BlogPostCard({ post, index }) {
           }}
         >
           <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {fDate(createdAt)}
+            {asma.translation.id}
           </Typography>
 
           <TitleStyle
-            to="#"
+            to={`detail-surah/${number}`}
             color="inherit"
             variant="subtitle2"
             underline="hover"
@@ -149,27 +150,26 @@ export default function BlogPostCard({ post, index }) {
               }),
             }}
           >
-            {title}
+            {asma.id.short}
           </TitleStyle>
 
-          <InfoStyle>
-            {POST_INFO.map((info, index) => (
               <Box
                 key={index}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'flex-end',
                   ml: index === 0 ? 0 : 1.5,
                   ...((latestPostLarge || latestPost) && {
                     color: 'grey.500',
                   }),
                 }}
               >
-                <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+                {/* <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} /> */}
+                <Typography variant="caption">{ayahCount} Ayat</Typography>
+                <Typography variant="caption"><pre> - </pre></Typography>
+                <Typography variant="caption">{type.id}</Typography>
               </Box>
-            ))}
-          </InfoStyle>
         </CardContent>
       </Card>
     </Grid>
