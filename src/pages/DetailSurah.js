@@ -24,8 +24,11 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
+let fullAlquran= [];
+
 export default function DetailSurah() {
   const [alquran , setAlquran] = React.useState([]);
+  // const [fullAlquran , setFullAlquran] = React.useState([]);
   const [surahName , setSurahName] = React.useState('Nama Surah');
   const [view , setView] = React.useState("arti");
   const angkaArab = ["٠" , "١" , "٢" , "٣" , "٤" , "٥" , "٦" , "٧" , "٨" , "٩"]
@@ -41,6 +44,12 @@ export default function DetailSurah() {
         setSurahName(response.data.data.asma.id.long)
         setAlquran(response.data.data.ayahs)
     });
+
+    axios(`https://quran-endpoint.vercel.app/quran`)
+    .then((response)=> {
+      fullAlquran = response.data.data;
+    });
+
   },[]);
 
   return (
@@ -85,10 +94,19 @@ export default function DetailSurah() {
         },
       }}
     >
-      <ButtonGroup variant="outlined" aria-label="outlined button group" sx={{ m: 3 }}>
-        <Button> {'<'} One</Button>
-        <Button> Al-Baqoroh {'>'} </Button>
-      </ButtonGroup>
+      {
+        (fullAlquran.length !== 0)?
+          <ButtonGroup variant="outlined" aria-label="outlined button group" sx={{ m: 3 }}>
+            {(slug !== '1')&&
+              <Button> {'<'} {fullAlquran[slug-2].asma.id.long} </Button>
+            }
+            {(slug !== '114')&&
+              <Button> {fullAlquran[slug].asma.id.long} {'>'} </Button>
+            }
+          </ButtonGroup>
+        :
+        <></>
+      }
     </Box>
     </Page>
   );
