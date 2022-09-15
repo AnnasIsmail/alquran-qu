@@ -17,14 +17,14 @@ const navConfig = [
     icon: getIcon('fa-solid:quran'),
   },
   {
-    title: 'user',
-    path: '/user',
-    icon: getIcon('eva:people-fill'),
+    title: 'doa - doa',
+    path: '/doa-doa',
+    icon: getIcon('fa-solid:praying-hands'),
   },
   {
-    title: 'product',
-    path: '/products',
-    icon: getIcon('eva:shopping-bag-fill'),
+    title: 'dzikir',
+    path: '/dzikir',
+    icon: getIcon('fa6-solid:person-praying'),
   },
   {
     title: 'login',

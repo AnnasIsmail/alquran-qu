@@ -7,13 +7,12 @@ import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 // components
 import Page from '../components/Page';
 import { BlogPostsSearch, BlogPostsSort } from '../sections/@dashboard/blog';
 import DetailAyat from '../sections/@dashboard/blog/DetailAyat';
 // mock
-import POSTS from '../_mock/blog';
 
 // ----------------------------------------------------------------------
 
@@ -25,13 +24,12 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 let fullAlquran= [];
+let alquranSurah = [];
 
 export default function DetailSurah() {
-  const [alquran , setAlquran] = React.useState([]);
   // const [fullAlquran , setFullAlquran] = React.useState([]);
   const [surahName , setSurahName] = React.useState('Nama Surah');
   const [view , setView] = React.useState("arti");
-  const angkaArab = ["٠" , "١" , "٢" , "٣" , "٤" , "٥" , "٦" , "٧" , "٨" , "٩"]
   const { slug } = useParams();
   
   const changeView =(value)=> {
@@ -39,10 +37,11 @@ export default function DetailSurah() {
   }
 
   React.useEffect(()=>{
+    
     axios(`https://quran-endpoint.vercel.app/quran/${slug}`)
     .then((response)=> {
         setSurahName(response.data.data.asma.id.long)
-        setAlquran(response.data.data.ayahs)
+        alquranSurah = response.data.data.ayahs;
     });
 
     axios(`https://quran-endpoint.vercel.app/quran`)
@@ -50,7 +49,7 @@ export default function DetailSurah() {
       fullAlquran = response.data.data;
     });
 
-  },[]);
+  });
 
   return (
     <Page title="Dashboard: Blog">
@@ -65,19 +64,19 @@ export default function DetailSurah() {
         </Stack>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
+          <BlogPostsSearch posts={alquranSurah} />
           <BlogPostsSort options={SORT_OPTIONS} changeView={changeView} />
         </Stack>
         {(view === "arti")?
             <Grid container spacing={3}>
-            {alquran.map((post, index) => (
+            {alquranSurah.map((post, index) => (
                 <DetailAyat key={post.id} post={post} index={index} namaSurah={surahName} />
             ))}
             </Grid>
         :
         <Card>
             <Typography gutterBottom variant="h4" sx={{ p: 2, zIndex: 9, textAlign: 'justify', direction: 'rtl' }} >
-                {alquran.map((post, index) => (
+                {alquranSurah.map((post, index) => (
                    <> {post.text.ar} <Chip label={post.number.insurah} sx={{ m: 2 , my: 1 }} /> </> 
                 ))}
             </Typography>
@@ -98,10 +97,16 @@ export default function DetailSurah() {
         (fullAlquran.length !== 0)?
           <ButtonGroup variant="outlined" aria-label="outlined button group" sx={{ m: 3 }}>
             {(slug !== '1')&&
-              <Button> {'<'} {fullAlquran[slug-2].asma.id.long} </Button>
+              <Button 
+              to={`/al-quran/detail-surah/${parseInt(slug , 10)-1}`}
+              component={RouterLink}
+              > {'<'} {fullAlquran[slug-2].asma.id.long} </Button>
             }
             {(slug !== '114')&&
-              <Button> {fullAlquran[slug].asma.id.long} {'>'} </Button>
+              <Button
+              to={`/al-quran/detail-surah/${parseInt(slug , 10)+1}`}
+              component={RouterLink}
+              > {fullAlquran[slug].asma.id.long} {'>'} </Button>
             }
           </ButtonGroup>
         :

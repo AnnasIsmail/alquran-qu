@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 
 // @mui
 import { Autocomplete, InputAdornment, Popper, TextField } from '@mui/material';
@@ -12,15 +11,8 @@ const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props
   width: '280px !important',
 });
 
-// ----------------------------------------------------------------------
 
-BlogPostsSearch.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
-
-export default function BlogPostsSearch({ posts }) {
-  console.log(posts);
-  
+export default function SurahSearch({ posts , setSearch }) {
   return (
     <Autocomplete
       sx={{ width: 280 }}
@@ -28,12 +20,15 @@ export default function BlogPostsSearch({ posts }) {
       popupIcon={null}
       PopperComponent={PopperStyle}
       options={posts}
-      getOptionLabel={(post) => `${post.number.insurah} - ${post.text.read} - ${post.translation.id}`}
-      isOptionEqualToValue={(option, value) => option.number.insurah === value.number.insurah}
+      getOptionLabel={(post) => `${post.number} - ${post.asma.id.short} - ${post.type.id}`}
+      isOptionEqualToValue={(option, value) => option.number === value.number}
+      onChange={(e)=>{
+        setSearch(e.target.dataset.optionIndex)
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Search Ayah..."
+          placeholder="Search Surah..."
           InputProps={{
             ...params.InputProps,
             startAdornment: (
