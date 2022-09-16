@@ -22,8 +22,8 @@ export default function SurahSearch({ posts , setSearch }) {
       options={posts}
       getOptionLabel={(post) => `${post.number} - ${post.asma.id.short} - ${post.type.id}`}
       isOptionEqualToValue={(option, value) => option.number === value.number}
-      onChange={(e)=>{
-        setSearch(e.target.dataset.optionIndex)
+      onChange={(e , v)=>{
+        setSearch(v)
       }}
       renderInput={(params) => (
         <TextField

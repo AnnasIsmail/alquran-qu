@@ -21,8 +21,6 @@ const SORT_OPTIONS = [
 export default function Blog() {
   const [alquran , setAlquran] = React.useState([]);
   const [alquranReady , setAlquranReady] = React.useState([]);
-  const [search , setSearch] = React.useState('');
-  const [sort , setSort] = React.useState('');
 
   React.useEffect(()=>{
     axios(`https://quran-endpoint.vercel.app/quran`)
@@ -32,17 +30,12 @@ export default function Blog() {
     });
   },[]);
 
-  const setSearchAndFilter =(v)=> {
-    if(v !== undefined){
-      setAlquranReady(alquran.filter((data , index)=> index === parseInt(10 , v)));
+  const setSearchFunc =(v)=> {
+    if(v !== null){
+      setAlquranReady(alquran.filter((data , index)=> data.number === v.number));
     }else{
       setAlquranReady(alquran);
     }
-  }
-
-  const setSearchFunc =(v)=> {
-    setSearch(v);
-    setSearchAndFilter(v);
   }
 
   return (

@@ -18,8 +18,7 @@ BlogPostsSearch.propTypes = {
   posts: PropTypes.array.isRequired,
 };
 
-export default function BlogPostsSearch({ posts }) {
-  console.log(posts);
+export default function BlogPostsSearch({ posts , setSearch }) {
   
   return (
     <Autocomplete
@@ -30,6 +29,9 @@ export default function BlogPostsSearch({ posts }) {
       options={posts}
       getOptionLabel={(post) => `${post.number.insurah} - ${post.text.read} - ${post.translation.id}`}
       isOptionEqualToValue={(option, value) => option.number.insurah === value.number.insurah}
+      onChange={(e , v)=>{
+        setSearch(v)
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
