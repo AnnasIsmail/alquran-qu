@@ -20,7 +20,7 @@ export default function Router() {
         { path: 'jadwal-sholat', element: <DashboardApp /> },
         { path: 'al-quran', element: <Blog /> },
         { path: 'al-quran/detail-surah/:slug', element: <DetailSurah /> },
-        { path: 'products', element: <Products /> },
+        { path: 'doa-doa', element: <Products /> },
         { path: 'user', element: <User /> },
         { path: '404', element: <NotFound /> },
         { path: '', element: <Navigate to="/jadwal-sholat" /> },
