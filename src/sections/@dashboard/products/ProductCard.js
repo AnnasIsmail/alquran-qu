@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Card, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
 // components
-import Label from '../../../components/Label';
-import { ColorPreview } from '../../../components/color-utils';
 
 // ----------------------------------------------------------------------
 
@@ -26,11 +22,11 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const { nama , riwayat , lafal , transliterasi , arti } = product;
 
   return (
     <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
+      {/* <Box sx={{ pt: '100%', position: 'relative' }}>
         {status && (
           <Label
             variant="filled"
@@ -47,30 +43,28 @@ export default function ShopProductCard({ product }) {
           </Label>
         )}
         <ProductImgStyle alt={name} src={cover} />
-      </Box>
+      </Box> */}
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
-            {name}
+          <Typography variant="h6">
+            {nama}
           </Typography>
-        </Link>
+
+          <Typography variant="h4" sx={{ pt: 2 , textAlign: 'justify', direction: 'rtl'  }}>
+            {lafal}
+          </Typography>
+
+          <Typography variant="subtitle2"  textAlign='justify' color= 'text.secondary' >
+            {transliterasi}
+          </Typography>
+
+          <Typography variant="subtitle1" sx={{ pt: 1 ,  textAlign: 'justify' }}>
+            {arti}
+          </Typography>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
-          <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through',
-              }}
-            >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
-            &nbsp;
-            {fCurrency(price)}
+          <Typography variant="subtitle2" color= 'text.disabled'>
+            {riwayat}
           </Typography>
         </Stack>
       </Stack>

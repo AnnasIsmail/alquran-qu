@@ -1,51 +1,68 @@
-import { useState } from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import React from 'react';
 import Page from '../components/Page';
-import { ProductCartWidget, ProductFilterSidebar, ProductList, ProductSort } from '../sections/@dashboard/products';
+import { ProductList } from '../sections/@dashboard/products';
 // mock
-import PRODUCTS from '../_mock/products';
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
-  const [openFilter, setOpenFilter] = useState(false);
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
+  // const arrayTampungan = []
+  // doa.forEach((data)=>{
+  //   data.kata_kunci.forEach((katkun)=>{
+  //     const exist = arrayTampungan.filter((dataExist)=> katkun === dataExist)
+  //     if(exist.length === 0){
+  //       arrayTampungan.push(katkun)
+  //     }
+  //   })
+  // })
+  // console.log(arrayTampungan);
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
+  const [ doaReady , setDoaReady ] = React.useState(doa);
+  const [ title , setTitle ] = React.useState('Kumpulan Doa - Doa');
 
-  console.log(doa)
+  const searchDoa =(v)=> {
+    if(v !== null){
+      setDoaReady(doa.filter((val)=> val.nama === v.nama));
+      setTitle(v.nama);
+    }else{
+      setDoaReady(doa);
+      setTitle('Kumpulan Doa - Doa');
+    }
+  }
 
   return (
     <Page title="Dashboard: Products">
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+        <Typography variant="h4" >
+          {title}
         </Typography>
 
-        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              isOpenFilter={openFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
-          </Stack>
+        <Stack direction="row" alignItems="center" flexWrap='wrap' justifyContent="space-between" gap={1} sx={{ my: 2 }}>
+          <Autocomplete
+            // disablePortal
+            id="combo-box-demo"
+            options={doa}
+            onChange={(e , v)=> searchDoa(v)}
+            getOptionLabel={(option) => option.nama}
+            sx={{ width: '100%' }}
+            renderInput={(params) => <TextField {...params} label="Search Doa" />}
+          />
         </Stack>
 
-        <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        <ProductList products={doaReady} />
+        {/* <ProductCartWidget /> */}
       </Container>
     </Page>
   );
 }
+
+
 const doa = [
   {
   "id_doa": "1",
@@ -389,15 +406,12 @@ const doa = [
   {
   "id_doa": "20",
   "nama": "Doa Ketika Mendengarkan Adzan",
-  "lafal": "",
-  "transliterasi": "",
-  "arti": "",
+  "lafal": "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ",
+  "transliterasi": "Laa haula wa laa quwwata illaa billaah.",
+  "arti": "Tidak ada daya dan kekuatan kecuali dengan pertolongan Allah.",
   "riwayat": "HR. Al-Bukhari 1/152 dan Muslim 1/288.",
   "keterangan": [
-  "Seseorang yang mendengarkan adzan, hendaklah mengucapkan sebagaimana yang diucapkan oleh muadzin, kecuali dalam kalimat: Hayya 'alash shalaah dan Hayya 'alal falaah. Maka mengucapkan:",
-  "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ",
-  "Laa haula wa laa quwwata illaa billaah.",
-  "Tidak ada daya dan kekuatan kecuali dengan pertolongan Allah."
+  "Seseorang yang mendengarkan adzan, hendaklah mengucapkan sebagaimana yang diucapkan oleh muadzin, kecuali dalam kalimat: Hayya 'alash shalaah dan Hayya 'alal falaah. Maka mengucapkan:"
   ],
   "kata_kunci": [
   "doa",
@@ -3327,20 +3341,6 @@ const doa = [
   ]
   },
   {
-  "id_doa": "167",
-  "nama": "Bila Malam Tiba",
-  "lafal": "",
-  "transliterasi": "",
-  "arti": "",
-  "riwayat": "HR. Al-Bukhari dengan Fathul Bari 10/88, Muslim 3/1595.",
-  "keterangan": "Apabila kegelapan malam telah tiba -atau kamu masuk di waktu malam-, maka tahanlah anak-anakmu, sesungguhnya setan pada saat itu bertebaran. Apabila malam telah terlewati sesaat, maka lepaskan mereka, tapi tutuplah pintu dan sebut nama Allah (baca: Bismillaah). Sesungguhnya setan tidak membuka pintu yang tertutup, ikatlah gerabahmu (tempat air dari kulit) dan sebutlah nama Allah. Tutuplah tempat-tempatmu dan sebutlah nama Allah, sekalipun dengan melintangkan sesuatu di atasnya, dan padamkan lampu-lampumu.",
-  "kata_kunci": [
-  "bila",
-  "malam",
-  "tiba"
-  ]
-  },
-  {
   "id_doa": "168",
   "nama": "Doa Berlindung Dari Sifat Lemah, Malas, Pengecut Dan Pikun",
   "lafal": "اَللَّهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ الْعَجْزِ، وَالْكَسَلِ، وَالْجُبْنِ، وَالْهَرَمِ",
@@ -3862,21 +3862,6 @@ const doa = [
   "atau",
   "ringkik",
   "keledai"
-  ]
-  },
-  {
-  "id_doa": "193",
-  "nama": "Bila Mendengar Anjing Menggonggong",
-  "lafal": "",
-  "transliterasi": "",
-  "arti": "",
-  "riwayat": "HR. Abu Dawud 4/327, Ahmad 3/306. Menurut pendapat Al-Albani, hadits ini shahih, dalam Shahih Abi Dawud 3/961.",
-  "keterangan": "Apabila kamu mendengar anjing menggonggong dan mendengar keledai meringkik, mintalah perlindungan kepada Allah. Sesungguhnya mereka melihat apa yang tidak kamu lihat.",
-  "kata_kunci": [
-  "bila",
-  "dengar",
-  "anjing",
-  "gonggong"
   ]
   },
   {

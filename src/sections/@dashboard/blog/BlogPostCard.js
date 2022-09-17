@@ -166,9 +166,9 @@ export default function BlogPostCard({ post, index }) {
                 }}
               >
                 {/* <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} /> */}
-                <Typography variant="caption">{ayahCount} Ayat</Typography>
-                <Typography variant="caption"><pre> - </pre></Typography>
-                <Typography variant="caption">{type.id}</Typography>
+                <Typography variant="caption" color= 'text.secondary'>{ayahCount} Ayat</Typography>
+                <Typography variant="caption" color= 'text.secondary'><pre> - </pre></Typography>
+                <Typography variant="caption" color= 'text.secondary'>{type.id}</Typography>
               </Box>
         </CardContent>
       </Card>

@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 // material
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider as MUIThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
+import { createTheme, StyledEngineProvider, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 //
-import palette from './palette';
-import typography from './typography';
 import componentsOverride from './overrides';
+import palette from './palette';
+import paletteDark from './paletteDark';
 import shadows, { customShadows } from './shadows';
+import typography from './typography';
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,9 @@ ThemeProvider.propTypes = {
 };
 
 export default function ThemeProvider({ children }) {
+
+  const tema = 'dark';  
+
   const themeOptions = useMemo(
     () => ({
       palette,
@@ -27,7 +31,27 @@ export default function ThemeProvider({ children }) {
     []
   );
 
-  const theme = createTheme(themeOptions);
+  const themeOptionsDark = useMemo(
+    () => ({
+      palette: paletteDark,
+      shape: { borderRadius: 8 },
+      typography,
+      shadows,
+      customShadows,
+    }),
+    []
+  );
+
+  let theme ;
+
+  if(tema === 'dark'){
+    console.log('masuk')
+    theme = createTheme(themeOptionsDark);
+  }else{
+    theme = createTheme(themeOptions);
+  }
+
+
   theme.components = componentsOverride(theme);
 
   return (

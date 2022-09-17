@@ -21,16 +21,16 @@ const navConfig = [
     path: '/doa-doa',
     icon: getIcon('fa-solid:praying-hands'),
   },
-  {
-    title: 'dzikir',
-    path: '/dzikir',
-    icon: getIcon('fa6-solid:person-praying'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon('eva:lock-fill'),
-  },
+  // {
+  //   title: 'dzikir',
+  //   path: '/dzikir',
+  //   icon: getIcon('fa6-solid:person-praying'),
+  // },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: getIcon('eva:lock-fill'),
+  // },
   // {
   //   title: 'register',
   //   path: '/register',
