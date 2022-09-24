@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // material
-import { Box, Drawer } from '@mui/material';
+import { Box, Drawer, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // mock
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // components
-import Logo from '../../components/Logo';
+// import Logo from '../../components/Logo';
+import logo from '../../android-chrome-512x512.png';
 import NavSection from '../../components/NavSection';
 import Scrollbar from '../../components/Scrollbar';
 //
@@ -59,8 +60,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', cursor: 'pointer' }}>
+        {/* <Logo /> */}
+        <img alt='Logo' src={logo} height='40px' width='40px' />
+        <Typography variant="h6" sx={{ mt: 1 , ml: 1 }} color="primary" >
+          Al-Qur'an Qu
+        </Typography>
       </Box>
 
       {/* <Box sx={{ mb: 5, mx: 2.5 }}>

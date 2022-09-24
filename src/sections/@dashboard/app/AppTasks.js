@@ -9,6 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import * as React from 'react';
+import { useCookies } from 'react-cookie';
 // @mui
 // components
 
@@ -21,10 +22,11 @@ AppTasks.propTypes = {
 
 export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
 
-  // let value
-  const [date, setDate] = React.useState(dayjs(new Date()));
+  const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [kota , setKota] = React.useState(lokasi[194])
+  const [kota , setKota] = React.useState(lokasi[194]);
+
+  const [date, setDate] = React.useState(dayjs(new Date()));
 
   function getJadwalSholat(date , kota){
       axios(`https://api.myquran.com/v1/sholat/jadwal/${kota.id}/${date.$y}/${date.$M+1}/${date.$D}`)
@@ -38,6 +40,16 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
     .then((response)=> {
       changeJadwal(response.data.data)
     });
+
+    if(cookies.location === undefined){
+      setKota(lokasi[194]);
+      setCookie('location' , lokasi[194].id);
+    }else{
+      lokasi.filter((data)=>data.id === cookies.location).forEach((data)=>{
+        setKota(data);
+      });
+    }
+
   },[])
 
   return (
@@ -68,6 +80,7 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
           sx={{ width: '100%' , p: 2 }}
           renderInput={(params) => <TextField {...params} label="Lokasi" />}
           onChange={(e , newValue)=>{
+            setCookie('location' , newValue.id);
             setKota(newValue);
             getJadwalSholat(date , newValue);
           }}
