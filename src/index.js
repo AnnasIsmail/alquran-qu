@@ -1,6 +1,5 @@
 // scroll bar
 import 'simplebar/src/simplebar.css';
-import './index.css';
 
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
@@ -24,7 +23,7 @@ root.render(
 );
 
 // If you want to enable client cache, register instead.
-serviceWorker.unregister();
+serviceWorker.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

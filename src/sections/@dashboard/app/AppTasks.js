@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 // form
 import { Card, CardHeader } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 // @mui
 // components
-
 // ----------------------------------------------------------------------
 
 AppTasks.propTypes = {
@@ -53,23 +53,24 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
   },[])
 
   return (
-    <Card {...other}>
+    <Card {...other} 
+
+    >
       <CardHeader title={title} subheader={subheader} />
-      <div
-          sx={{ m: 3, zIndex: 200000 }}
-      >
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Tanggal"
-          onChange={(newValue) => {
-            setDate(newValue);
-            getJadwalSholat(newValue , kota);
-          }}
-          value={date}
-          renderInput={(params) => <TextField {...params} />}
-        />
-    </LocalizationProvider>
-      </div>
+        <Stack spacing={3} sx={{ px: 2, pt: 2 }} >
+          <MobileDatePicker
+            label="Tanggal"
+            value={date}
+            onChange={(newValue) => {
+              setDate(newValue);
+              getJadwalSholat(newValue , kota);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </Stack>
+      </LocalizationProvider>
 
         <Autocomplete
           disablePortal
@@ -77,7 +78,10 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
           // defaultValue={lokasi[0]}
           value={kota}
           options={lokasi}
-          sx={{ width: '100%' , p: 2 }}
+          sx={{ 
+            width: '100%',
+            p: 2, 
+          }}
           renderInput={(params) => <TextField {...params} label="Lokasi" />}
           onChange={(e , newValue)=>{
             setCookie('location' , newValue.id);

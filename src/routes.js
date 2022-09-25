@@ -1,6 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
+import AboutMe from './pages/AboutMe';
 //
 import Blog from './pages/Blog';
 import DashboardApp from './pages/DashboardApp';
@@ -21,6 +22,7 @@ export default function Router() {
         { path: 'al-quran', element: <Blog /> },
         { path: 'al-quran/detail-surah/:slug', element: <DetailSurah /> },
         { path: 'doa-doa', element: <Products /> },
+        { path: '/about-me', element: <AboutMe /> },
         { path: 'user', element: <User /> },
         { path: '404', element: <NotFound /> },
         { path: '', element: <Navigate to="/jadwal-sholat" /> },

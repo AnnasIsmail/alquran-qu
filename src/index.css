@@ -4,6 +4,13 @@
     margin-bottom: 0;
 }
 
+#page-dashboard .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+    width: calc(100% - 32px) !important;
+    margin: 16px;
+    margin-bottom: 0;
+}
+
+
 .page-dashboard .css-m6djc-MuiPaper-root-MuiCard-root{
     overflow: inherit !important;
 }

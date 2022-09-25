@@ -21,6 +21,11 @@ const navConfig = [
     path: '/doa-doa',
     icon: getIcon('fa-solid:praying-hands'),
   },
+  {
+    title: 'about me',
+    path: '/about-me',
+    icon: getIcon('akar-icons:info-fill'),
+  },
   // {
   //   title: 'dzikir',
   //   path: '/dzikir',
