@@ -79,6 +79,9 @@ export default function ComponentAbout({ title, total, icon, color = 'primary', 
             <Link href="mailto:annasismailmuhammad@gmail.com" underline="none" color="inherit" target="_blank">
                 <Iconify icon="bxl:gmail" width={30} height={30} />
             </Link>
+            <Link href="https://www.youtube.com/channel/UCWBDexy4KU6WrHwR74B-Nfg" underline="none" color="inherit" target="_blank">
+                <Iconify icon="ant-design:youtube-filled" width={30} height={30} />
+            </Link>
         </Grid>
 
       

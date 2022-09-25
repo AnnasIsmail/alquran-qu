@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // form
 import { Card, CardHeader } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -20,6 +20,8 @@ AppTasks.propTypes = {
   subheader: PropTypes.string,
 };
 
+const filter = createFilterOptions();
+
 export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
 
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -27,6 +29,8 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
   const [kota , setKota] = React.useState(lokasi[194]);
 
   const [date, setDate] = React.useState(dayjs(new Date()));
+
+  const [value, setValue] = React.useState(null);
 
   function getJadwalSholat(date , kota){
       axios(`https://api.myquran.com/v1/sholat/jadwal/${kota.id}/${date.$y}/${date.$M+1}/${date.$D}`)
@@ -44,18 +48,22 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
     if(cookies.location === undefined){
       setKota(lokasi[194]);
       setCookie('location' , lokasi[194].id);
+      getJadwalSholat(date , lokasi[194]);
     }else{
       lokasi.filter((data)=>data.id === cookies.location).forEach((data)=>{
         setKota(data);
+        getJadwalSholat(date , data);
+        axios(`https://api.myquran.com/v1/sholat/jadwal/${data.id}/${date.$y}/${date.$M+1}/${date.$D}`)
+        .then((response)=> {
+          changeJadwal(response.data.data)
+        });
       });
     }
 
   },[])
 
   return (
-    <Card {...other} 
-
-    >
+    <Card {...other} >
       <CardHeader title={title} subheader={subheader} />
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -72,7 +80,69 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
         </Stack>
       </LocalizationProvider>
 
-        <Autocomplete
+      <Autocomplete
+      value={kota}
+      onChange={(event, newValue) => {
+        if (typeof newValue === 'string') {
+          setKota({
+            title: newValue,
+          });
+          getJadwalSholat(date , newValue);
+          setCookie('location' , newValue.id);
+        } else if (newValue && newValue.inputValue) {
+          // Create a new value from the user input
+          setKota({
+            title: newValue.inputValue,
+          });
+          getJadwalSholat(date , newValue);
+          setCookie('location' , newValue.id);
+        } else {
+          setKota(newValue);
+          getJadwalSholat(date , newValue);
+          setCookie('location' , newValue.id);
+        }
+      }}
+      filterOptions={(options, params) => {
+        const filtered = filter(options, params);
+
+        const { inputValue } = params;
+        // Suggest the creation of a new value
+        const isExisting = options.some((option) => inputValue === option.title);
+        if (inputValue !== '' && !isExisting) {
+          filtered.push({
+            inputValue,
+            title: `Add "${inputValue}"`,
+          });
+        }
+
+        return filtered;
+      }}
+      selectOnFocus
+      clearOnBlur
+      handleHomeEndKeys
+      id="free-solo-with-text-demo"
+      options={lokasi}
+      getOptionLabel={(option) => {
+        // Value selected with enter, right from the input
+        if (typeof option === 'string') {
+          return option;
+        }
+        // Add "xxx" option created dynamically
+        if (option.inputValue) {
+          return option.inputValue;
+        }
+        // Regular option
+        return option.label;
+      }}
+      renderOption={(props, option) => <li {...props}>{option.label}</li>}
+      sx={{ width: '100%', p: 2, pb: 3 }}
+      freeSolo
+      renderInput={(params) => (
+        <TextField {...params} label="Lokasi" />
+      )}
+    />
+
+        {/* <Autocomplete
           disablePortal
           id="combo-box-demo"
           // defaultValue={lokasi[0]}
@@ -81,14 +151,15 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
           sx={{ 
             width: '100%',
             p: 2, 
+            zIndex: 200
           }}
           renderInput={(params) => <TextField {...params} label="Lokasi" />}
           onChange={(e , newValue)=>{
-            setCookie('location' , newValue.id);
             setKota(newValue);
             getJadwalSholat(date , newValue);
+            setCookie('location' , newValue.id);
           }}
-        />
+        /> */}
     </Card>
   );
 }

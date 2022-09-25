@@ -37,7 +37,7 @@ export default function EcommerceShop() {
   }
 
   return (
-    <Page title="Dashboard: Products">
+    <Page title="Doa - Doa">
       <Container>
         <Typography variant="h4" >
           {title}

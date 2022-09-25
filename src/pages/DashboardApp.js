@@ -4,6 +4,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import axios from 'axios';
 import React from 'react';
+import { useCookies } from 'react-cookie';
 // components
 import Page from '../components/Page';
 // sections
@@ -12,6 +13,8 @@ import { AppNewsUpdate, AppTasks, AppWidgetSummary } from '../sections/@dashboar
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   const theme = useTheme();
   let d = new Date();
   const [time , setTime] = React.useState('')
@@ -156,6 +159,7 @@ export default function DashboardApp() {
     tanggalJadwal = `${data.jadwal.tanggal}`
     tanggalJadwal2 = `${data.jadwal.date}`
     idLokasiJadwal = data.id
+    // setCookie('location' , data.id);
     jadwalSholat = [
       {
         id: faker.datatype.uuid(),
@@ -277,7 +281,7 @@ export default function DashboardApp() {
   }
 
   return (
-    <Page title="Dashboard">
+    <Page title="Jadwal Sholat">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           Time : {time}
@@ -296,7 +300,7 @@ export default function DashboardApp() {
             <AppTasks
               title="Lokasi dan Tanggal"
               changeJadwal={changeJadwal}
-    
+              sx={{ zIndex: 200 }}
             />
           </Grid>
 
