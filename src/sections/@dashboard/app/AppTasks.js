@@ -32,6 +32,10 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
 
   const [value, setValue] = React.useState(null);
 
+  const today = new Date();
+  const nextYear = new Date();
+  nextYear.setDate(today.getDate()+3600);
+
   function getJadwalSholat(date , kota){
       axios(`https://api.myquran.com/v1/sholat/jadwal/${kota.id}/${date.$y}/${date.$M+1}/${date.$D}`)
       .then((response)=> {
@@ -88,18 +92,18 @@ export default function AppTasks({ title, subheader, changeJadwal, ...other }) {
             title: newValue,
           });
           getJadwalSholat(date , newValue);
-          setCookie('location' , newValue.id);
+          setCookie('location' , newValue.id , {expires: nextYear , path: '/'});
         } else if (newValue && newValue.inputValue) {
           // Create a new value from the user input
           setKota({
             title: newValue.inputValue,
           });
           getJadwalSholat(date , newValue);
-          setCookie('location' , newValue.id);
+          setCookie('location' , newValue.id , {expires: nextYear , path: '/'});
         } else {
           setKota(newValue);
           getJadwalSholat(date , newValue);
-          setCookie('location' , newValue.id);
+          setCookie('location' , newValue.id , {expires: nextYear , path: '/'});
         }
       }}
       filterOptions={(options, params) => {
